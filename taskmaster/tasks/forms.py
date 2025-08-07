@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Task
 
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(UserCreationForm): #Custom user creation form 
     email = forms.EmailField(required=True)
     
     class Meta:
@@ -24,7 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
-class TaskForm(forms.ModelForm):
+class TaskForm(forms.ModelForm): #Form for creating and updating tasks
     class Meta:
         model = Task
         fields = ['title', 'description', 'due_date', 'priority', 'completed']
@@ -33,7 +33,7 @@ class TaskForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 4}),
         }
 
-class TaskFilterForm(forms.Form):
+class TaskFilterForm(forms.Form): #Form for filtering tasks
     completed = forms.ChoiceField(
         choices=[('', 'All'), ('True', 'Completed'), ('False', 'Pending')],
         required=False,

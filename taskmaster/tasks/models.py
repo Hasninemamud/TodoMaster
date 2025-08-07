@@ -5,6 +5,7 @@ from django.utils import timezone
 
 
 class Task(models.Model):
+    # Define priority level choices for tasks
     PRIORITY_CHOICES = [
         ('LOW', 'Low'),
         ('MEDIUM', 'Medium'),
