@@ -14,19 +14,19 @@ A personal task manager web application built with Django and TailwindCSS.
 ## Screenshots
 
 ### Registration Page
-![Registration Page](screenshots/registration.png)
+![Registration Page](TodoMaster/screenshots/registration.png)
 
 ### Login Page
-![Login Page](screenshots/Login.png)
+![Login Page](TodoMaster/screenshots/Login.png)
 
 ### Task List
-![Task List](screenshots/task_list.png)
+![Task List](TodoMaster/screenshots/task_list.png)
 
 ### Task Form
-![Task Form](screenshots/127.0.0.1_8000_task_new_.png)
+![Task Form](TodoMaster/screenshots/127.0.0.1_8000_task_new_.png)
 
 ### Task Detail
-![Task Detail](screenshots/127.0.0.1_8000_task_details.png)
+![Task Detail](TodoMaster/screenshots/127.0.0.1_8000_task_details.png)
 
 ## Prerequisites
 
