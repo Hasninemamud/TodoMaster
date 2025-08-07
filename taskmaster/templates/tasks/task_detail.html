@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task.title }} - Task Detail{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6 sm:p-8 mt-6 transition-all duration-200">
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-8 gap-4">
+        <h1 class="text-3xl font-extrabold text-gray-900 break-words">
+            {{ task.title }}
+        </h1>
+
+        <div class="flex flex-wrap gap-3 justify-start sm:justify-end">
+            <a
+                href="{% url 'task_update' task.id %}"
+                class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-4 py-2 rounded-lg shadow transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                aria-label="Edit this task"
+            >
+                <i class="fas fa-edit mr-2"></i>
+                Edit
+            </a>
+            <a
+                href="{% url 'task_delete' task.id %}"
+                class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white font-semibold text-sm px-4 py-2 rounded-lg shadow transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                aria-label="Delete this task"
+            >
+                <i class="fas fa-trash mr-2"></i>
+                Delete
+            </a>
+        </div>
+    </header>
+
+    <!-- Task Info Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        
+        <!-- Task Details -->
+        <section class="bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+                <i class="fas fa-info-circle text-indigo-500 mr-2"></i>
+                Task Details
+            </h2>
+
+            <p class="text-gray-700 mb-6 leading-relaxed">{{ task.description|default:"No description provided." }}</p>
+
+            <div class="space-y-5">
+                <!-- Due Date -->
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Due Date</span>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="font-medium {% if task.is_overdue %}text-red-600{% else %}text-gray-800{% endif %}">
+                            {{ task.due_date|date:"F d, Y" }}
+                        </span>
+                        {% if task.is_overdue %}
+                            <span class="text-xs font-bold bg-red-100 text-red-800 px-2 py-1 rounded-full animate-pulse">
+                                Overdue
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Priority -->
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Priority</span>
+                    <span class="
+                        mt-1 inline-flex items-center px-3 py-1 text-sm rounded-full font-semibold
+                        {% if task.priority == 'HIGH' %}
+                            bg-red-100 text-red-800
+                        {% elif task.priority == 'MEDIUM' %}
+                            bg-yellow-100 text-yellow-800
+                        {% else %}
+                            bg-green-100 text-green-800
+                        {% endif %}
+                    ">
+                        {% if task.priority == 'HIGH' %}
+                            <i class="fas fa-arrow-up mr-1"></i>
+                        {% elif task.priority == 'MEDIUM' %}
+                            <i class="fas fa-arrows-alt-h mr-1"></i>
+                        {% else %}
+                            <i class="fas fa-arrow-down mr-1"></i>
+                        {% endif %}
+                        {{ task.get_priority_display }}
+                    </span>
+                </div>
+
+                <!-- Status -->
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Status</span>
+                    <span class="
+                        mt-1 inline-flex items-center px-3 py-1 text-sm rounded-full font-semibold
+                        {% if task.completed %}bg-green-100 text-green-800
+                        {% else %}bg-gray-100 text-gray-800{% endif %}
+                    ">
+                        {% if task.completed %}
+                            <i class="fas fa-check-circle mr-1"></i> Completed
+                        {% else %}
+                            <i class="fas fa-clock mr-1"></i> Pending
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Info -->
+        <section class="bg-gray-50 border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+                <i class="fas fa-clock text-indigo-500 mr-2"></i>
+                Timeline & Updates
+            </h2>
+
+            <div class="space-y-5">
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Created On</span>
+                    <p class="text-gray-800 mt-1">{{ task.created_at|date:"F d, Y \a\t g:i A" }}</p>
+                </div>
+
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Last Updated</span>
+                    <p class="text-gray-800 mt-1">{{ task.updated_at|date:"F d, Y \a\t g:i A" }}</p>
+                </div>
+
+                <!-- Optional: Show completion date if applicable -->
+                {% if task.completed and task.completed_at %}
+                <div>
+                    <span class="block text-sm font-medium text-gray-500">Completed On</span>
+                    <p class="text-gray-800 mt-1">{{ task.completed_at|date:"F d, Y \a\t g:i A" }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    <!-- Back Button -->
+    <footer class="mt-8">
+        <a
+            href="{% url 'task_list' %}"
+            class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors duration-200"
+        >
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Tasks
+        </a>
+    </footer>
+</div>
+{% endblock %}

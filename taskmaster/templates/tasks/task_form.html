@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-t-lg p-6 shadow-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold">{{ title }}</h1>
+                <p class="text-indigo-200 mt-1">
+                    {% if 'create' in title|lower %}
+                        Create a new task to stay organized
+                    {% else %}
+                        Update your task details
+                    {% endif %}
+                </p>
+            </div>
+            <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                <i class="fas fa-tasks text-2xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Form Section -->
+    <div class="bg-white shadow-lg rounded-b-lg p-6 md:p-8">
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Title Field -->
+            <div>
+                <label for="id_title" class="block text-gray-700 font-medium mb-2">
+                    <i class="fas fa-heading text-indigo-600 mr-2"></i> Title
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-red-500 text-sm mt-1 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i> {{ form.title.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Description Field -->
+            <div>
+                <label for="id_description" class="block text-gray-700 font-medium mb-2">
+                    <i class="fas fa-align-left text-indigo-600 mr-2"></i> Description
+                </label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-red-500 text-sm mt-1 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i> {{ form.description.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Due Date and Priority Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Due Date Field -->
+                <div>
+                    <label for="id_due_date" class="block text-gray-700 font-medium mb-2">
+                        <i class="fas fa-calendar-alt text-indigo-600 mr-2"></i> Due Date
+                    </label>
+                    <div class="relative">
+                        {{ form.due_date }}
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="fas fa-calendar text-gray-400"></i>
+                        </div>
+                    </div>
+                    {% if form.due_date.errors %}
+                        <div class="text-red-500 text-sm mt-1 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i> {{ form.due_date.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Priority Field -->
+                <div>
+                    <label for="id_priority" class="block text-gray-700 font-medium mb-2">
+                        <i class="fas fa-flag text-indigo-600 mr-2"></i> Priority
+                    </label>
+                    {{ form.priority }}
+                    {% if form.priority.errors %}
+                        <div class="text-red-500 text-sm mt-1 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i> {{ form.priority.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Completed Checkbox -->
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center h-5">
+                    {{ form.completed }}
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="id_completed" class="font-medium text-gray-700">
+                        Mark as completed
+                    </label>
+                    <p class="text-gray-500">Check this box if the task has been completed</p>
+                </div>
+                {% if form.completed.errors %}
+                    <div class="text-red-500 text-sm mt-1 flex items-center ml-3">
+                        <i class="fas fa-exclamation-circle mr-1"></i> {{ form.completed.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-3 pt-4">
+                <button type="submit" class="flex-1 flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    <i class="fas fa-save mr-2"></i> Save Task
+                </button>
+                <a href="{% url 'task_list' %}" class="flex-1 flex justify-center items-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-times mr-2"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Tips Section -->
+    <div class="mt-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-lightbulb text-blue-500"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                    <strong>Tip:</strong> Be specific with your task titles and set realistic due dates to improve your productivity.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom form styling */
+    input[type="text"], 
+    input[type="email"], 
+    input[type="password"], 
+    input[type="date"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    input:focus, 
+    textarea:focus, 
+    select:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    input[type="checkbox"] {
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 0.25rem;
+        border: 1px solid #d1d5db;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+    
+    input[type="checkbox"]:checked {
+        background-color: #6366f1;
+        border-color: #6366f1;
+    }
+    
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+</style>
+{% endblock %}
