@@ -199,6 +199,27 @@ taskmaster/
 ├── requirements.txt     # Python dependencies
 └── README.md            # This file
 ```
+## Approach and Challenges
+
+### Approach
+
+1. **Project Structure**: I followed Django's best practices for project structure, separating concerns between models, views, templates, and forms.
+
+2. **Authentication**: I used Django's built-in authentication system with custom registration and login views.
+
+3. **Task Management**: I implemented CRUD operations for tasks with proper user association to ensure users can only see and manage their own tasks.
+
+4. **UI Design**: I used TailwindCSS for styling, ensuring a responsive design that works well on both mobile and desktop devices.
+
+5. **User Feedback**: I implemented Django's messages framework to provide feedback to users after performing actions.
+
+### Challenges
+
+1. **Styling Forms**: Styling Django forms with TailwindCSS required some customization to ensure consistency with the rest of the UI.
+
+2. **Date Handling**: Properly handling dates and highlighting overdue tasks required careful implementation to account for timezone differences.
+
+3. **Filtering**: Implementing the filtering functionality required careful consideration of the form design and query construction.
 
 ## Technologies Used
 
