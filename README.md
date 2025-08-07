@@ -14,7 +14,7 @@ A personal task manager web application built with Django and TailwindCSS.
 ## Screenshots
 
 ### Registration Page
-![Registration Page](taskmaster/screenshots/registration.png)
+![Registration Page](taskmaster/screenshots/register.png)
 
 ### Login Page
 ![Login Page](taskmaster/screenshots/Login.png)
